@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD. Moniruzzaman Ishaan — Portfolio</title>
+<style>
+  /* ===== THEME VARIABLES ===== */
+  :root {
+    --bg: #0b1120;
+    --bg-alt: #111a2e;
+    --card: #16213a;
+    --text: #e6ecf5;
+    --text-muted: #93a3bd;
+    --accent: #c8102e;        /* crimson from tie */
+    --accent-soft: #ff4d6a;
+    --border: #24304d;
+    --shadow: 0 12px 30px rgba(0,0,0,0.45);
+  }
+
+  [data-theme="light"] {
+    --bg: #f4f6fb;
+    --bg-alt: #ffffff;
+    --card: #ffffff;
+    --text: #0b1120;
+    --text-muted: #5a6b85;
+    --accent: #c8102e;
+    --accent-soft: #a30d25;
+    --border: #dde3ee;
+    --shadow: 0 12px 30px rgba(15,23,42,0.10);
+  }
+
+  /* ===== BASE ===== */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background .35s ease, color .35s ease;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width:100%; display:block; }
+
+  /* ===== NAVBAR ===== */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    font-weight: 800;
+    letter-spacing: .5px;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo span { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    font-size: .92rem;
+    font-weight: 500;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent-soft); }
+
+  .theme-toggle {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.15rem;
+    display: grid;
+    place-items: center;
+    transition: transform .2s, border-color .2s;
+  }
+  .theme-toggle:hover { transform: rotate(20deg) scale(1.08); border-color: var(--accent); }
+
+  /* ===== HERO ===== */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 70px 22px 60px;
+    display: grid;
+    grid-template-columns: 1.25fr .75fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4.4vw, 3.1rem);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -.5px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p.lead {
+    margin-top: 18px;
+    color: var(--text-muted);
+    font-size: 1.02rem;
+    max-width: 60ch;
+  }
+  .hero-actions {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: .92rem;
+    transition: transform .2s, box-shadow .2s, background .2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: var(--accent-soft); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-soft); transform: translateY(-2px); }
+
+  .hero-photo {
+    position: relative;
+    justify-self: center;
+  }
+  .hero-photo img {
+    width: 290px;
+    height: 290px;
+    object-fit: cover;
+    border-radius: 24px;
+    border: 3px solid var(--accent);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
+  }
+  .hero-photo::after {
+    content:'';
+    position:absolute;
+    inset: 18px -18px -18px 18px;
+    border-radius: 24px;
+    border: 2px dashed var(--accent);
+    opacity: .35;
+    z-index: 1;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 22px;
+  }
+  .section-head { margin-bottom: 38px; }
+  .section-head .eyebrow {
+    color: var(--accent-soft);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .section-head h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    margin-top: 6px;
+    letter-spacing: -.4px;
+  }
+  .section-head p { color: var(--text-muted); margin-top: 8px; max-width: 65ch; }
+
+  /* ===== STATS ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    margin-top: 10px;
+  }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    text-align: center;
+    transition: transform .25s, border-color .25s;
+  }
+  .stat:hover { transform: translateY(-4px); border-color: var(--accent); }
+  .stat .num { font-size: 1.9rem; font-weight: 800; color: var(--accent); }
+  .stat .label { font-size: .82rem; color: var(--text-muted); margin-top: 4px; }
+
+  /* ===== SKILLS ===== */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  }
+  .card h3 {
+    font-size: 1.02rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h3 .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: .78rem;
+    padding: 6px 12px;
+    border-radius: 50px;
+    background: color-mix(in srgb, var(--accent) 10%, var(--bg-alt));
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content:'';
+    position:absolute;
+    left: 7px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: linear-gradient(var(--accent), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 34px; }
+  .tl-item::before {
+    content:'';
+    position:absolute;
+    left: -28px; top: 6px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 3px solid var(--accent);
+  }
+  .tl-item h3 { font-size: 1.05rem; font-weight: 700; }
+  .tl-item .meta {
+    font-size: .8rem;
+    color: var(--accent-soft);
+    font-weight: 600;
+    letter-spacing: .4px;
+    margin: 4px 0 10px;
+  }
+  .tl-item ul { padding-left: 18px; color: var(--text-muted); font-size: .93rem; }
+  .tl-item ul li { margin-bottom: 6px; }
+
+  /* ===== EDUCATION ===== */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .edu {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .edu h4 { font-size: .98rem; font-weight: 700; }
+  .edu .school { font-size: .85rem; color: var(--text-muted); margin: 4px 0 10px; }
+  .edu .cgpa {
+    display: inline-block;
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--accent-soft);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-wrap {
+    background: linear-gradient(135deg, var(--card), var(--bg-alt));
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 46px 34px;
+    text-align: center;
+  }
+  .contact-wrap h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; }
+  .contact-wrap p { color: var(--text-muted); margin: 10px auto 26px; max-width: 55ch; }
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .contact-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    border-radius: 10px;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    font-size: .9rem;
+    font-weight: 600;
+    transition: border-color .2s, transform .2s;
+  }
+  .contact-links a:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-muted);
+    font-size: .82rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; text-align: center; padding-top: 48px; }
+    .hero p.lead { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-photo { order: -1; }
+    .hero-photo img { width: 230px; height: 230px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<header>
+  <div class="nav">
+    <div class="logo">MONIRUZZAMAN <span>ISHAAN</span></div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Expertise</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="about">
+  <div>
+    <span class="hero-tag">Manager · Branch Sales Operations</span>
+    <h1>Driving <span>Revenue</span>,<br>Operational Discipline &amp;<br>Premium Client Experience</h1>
+    <p class="lead">
+      Target-driven Operations &amp; Branch Management professional with 5+ years of multidisciplinary
+      experience leading cross-functional teams, executing sales targets, and maintaining high service
+      governance — backed by a B.Sc. in Computer Science &amp; Engineering.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">📩 Get in Touch</a>
+      <a href="#experience" class="btn btn-ghost">View Experience →</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <!-- Professional headshot embedded as base64 -->
+    <img src="image1.jpeg" alt="MD. Moniruzzaman Ishaan">
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section style="padding-top:0;">
+  <div class="stats">
+    <div class="stat"><div class="num">5+</div><div class="label">Years Experience</div></div>
+    <div class="stat"><div class="num">35%</div><div class="label">Inquiry Growth</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">SOP Compliance</div></div>
+    <div class="stat"><div class="num">3.49</div><div class="label">CSE CGPA / 4.00</div></div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section id="skills">
+  <div class="section-head">
+    <div class="eyebrow">Core Competencies</div>
+    <h2>Functional Expertise</h2>
+    <p>A blend of sales operations, team leadership, branch administration, and customer journey management.</p>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3><span class="dot"></span>Sales Operations &amp; Target Mastery</h3>
+      <div class="chips">
+        <span class="chip">Revenue Target Execution</span>
+        <span class="chip">Conversion Rate Optimization</span>
+        <span class="chip">Average Ticket Size Growth</span>
+        <span class="chip">Upselling / Cross-Selling</span>
+        <span class="chip">Treatment Bundling</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Team Leadership &amp; Synergy</h3>
+      <div class="chips">
+        <span class="chip">Daily Shift Briefings</span>
+        <span class="chip">Front Desk Coaching</span>
+        <span class="chip">Conflict Resolution</span>
+        <span class="chip">Cross-Departmental Coordination</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Branch Administration &amp; SOP</h3>
+      <div class="chips">
+        <span class="chip">Full-Time Shift Management</span>
+        <span class="chip">Luxury Ambiance &amp; Cleanliness</span>
+        <span class="chip">Client Scheduling</span>
+        <span class="chip">Operational Governance</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Customer Journey &amp; Escalation</h3>
+      <div class="chips">
+        <span class="chip">Premium Client Protocol</span>
+        <span class="chip">VIP Consultation Care</span>
+        <span class="chip">Complaint Resolution</span>
+        <span class="chip">Retention &amp; Referral Programs</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Inventory, CRM &amp; Analytics</h3>
+      <div class="chips">
+        <span class="chip">Stock Auditing</span>
+        <span class="chip">Loss Prevention</span>
+        <span class="chip">Supply Chain Replenishment</span>
+        <span class="chip">KPI Reporting</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="dot"></span>Tech &amp; Marketing Toolkit</h3>
+      <div class="chips">
+        <span class="chip">MS Excel (VLOOKUP, Pivot)</span>
+        <span class="chip">Meta Ads &amp; Google Ads</span>
+        <span class="chip">Canva / Photoshop / Illustrator</span>
+        <span class="chip">POS Visuals</span>
+        <span class="chip">CRM &amp; Lead Tracking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience">
+  <div class="section-head">
+    <div class="eyebrow">Career Path</div>
+    <h2>Professional Experience</h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <h3>Lab Coordinator &amp; Lab In-Charge (Operations Lead)</h3>
+      <div class="meta">BDSET Training Center · Dec 2025 – Present · Rajshahi</div>
+      <ul>
+        <li>Direct day-to-day operations of a modern ICT training facility with 100% operational readiness and strict SOP adherence.</li>
+        <li>Supervise instructors, technical assistants, and admin staff; run daily operational briefings and oversee concurrent cohorts.</li>
+        <li>Resolve participant queries and service bottlenecks to maintain high satisfaction and course completion rates.</li>
+        <li>Monitor equipment inventory and coordinate procurement/maintenance with zero downtime.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Administrative Officer</h3>
+      <div class="meta">Shono Bangladesh · Jan 2025 – Aug 2025 · Dhaka</div>
+      <ul>
+        <li>Managed branch administration, cross-departmental coordination, vendor communications, and resource allocation.</li>
+        <li>Handled executive follow-ups, administrative inquiries, and client/partner complaint resolution.</li>
+        <li>Maintained digital and physical documentation, archives, procurement logs, and compliance reports.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Project Coordinator — Her Power Project</h3>
+      <div class="meta">Graphics Aide · Jun 2023 – Dec 2024 · Chapainawabganj</div>
+      <ul>
+        <li>Spearheaded field-level program execution and training operations across regional centers.</li>
+        <li>Led field teams, certified trainers, and community mobilizers; established daily activity plans.</li>
+        <li>Prepared weekly/monthly operational progress reports, attendance analytics, and impact summaries.</li>
+        <li>Coordinated with district authorities, institutional partners, and local stakeholders.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Sales &amp; Marketing Coordinator (Project Role)</h3>
+      <div class="meta">Graphics Aide · 2023 – 2024</div>
+      <ul>
+        <li>Executed paid acquisition campaigns (Meta Ads &amp; Google Ads) and local promotions, growing inquiries and admissions by 35%+.</li>
+        <li>Coached front-desk counseling teams on consultation scripts and objection handling; monitored average ticket size.</li>
+        <li>Developed promotional collateral using Canva, Adobe Photoshop, and Illustrator.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>Senior Executive — Accounts</h3>
+      <div class="meta">EGEN Online Marketplace · 2019 – 2021 · Bangladesh</div>
+      <ul>
+        <li>Handled daily bookkeeping, sales reconciliations, expense ledgers, invoice verification, and stock movement logs.</li>
+        <li>Prepared periodic financial summaries and maintained compliance records including transport and BRTA documentation.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EDUCATION ===== -->
+<section id="education">
+  <div class="section-head">
+    <div class="eyebrow">Credentials</div>
+    <h2>Education &amp; Certifications</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu">
+      <h4>B.Sc. in Computer Science &amp; Engineering</h4>
+      <div class="school">Asian University of Bangladesh (AUB) · 2022 – 2025</div>
+      <span class="cgpa">CGPA 3.49 / 4.00</span>
+    </div>
+    <div class="edu">
+      <h4>Diploma in Electronics Technology</h4>
+      <div class="school">Dinajpur Institute of Science and Technology · 2017 – 2022</div>
+      <span class="cgpa">CGPA 3.55 / 4.00</span>
+    </div>
+    <div class="edu">
+      <h4>Secondary School Certificate (SSC)</h4>
+      <div class="school">Dinajpur Technical Training Center (TTC) · 2014 – 2015</div>
+      <span class="cgpa">CGPA 3.57 / 5.00</span>
+    </div>
+  </div>
+  <div class="card" style="margin-top:22px;">
+    <h3><span class="dot"></span>Certifications &amp; Training</h3>
+    <div class="chips">
+      <span class="chip">Digital Marketing &amp; Paid Advertising (Meta &amp; Google Ads)</span>
+      <span class="chip">Online Retail Marketing &amp; Merchandising</span>
+      <span class="chip">Professional Graphic Design (Photoshop &amp; Illustrator)</span>
+      <span class="chip">Computer Office Applications &amp; Business Data Management</span>
+      <span class="chip">Cyber Security — Fundamental Level</span>
+      <span class="chip">Mobile Phone &amp; Electronic Hardware Diagnostics</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="contact-wrap">
+    <h2>Let's Build Something Great</h2>
+    <p>Open to branch sales operations and management roles in Dhaka, Dinajpur, or any assigned branch nationwide. Fully prepared for full-time shifts (10:00 AM – 8:00 PM).</p>
+    <div class="contact-links">
+      <a href="mailto:ishaanaslam211@gmail.com">✉️ ishaanaslam211@gmail.com</a>
+      <a href="tel:+8801737888820">📞 +88 01863477117 </a>
+      <a href="https://linkedin.com/in/md-moniruzzaman-ishaan" target="_blank" rel="noopener">💼 LinkedIn</a>
+      <a href="#">📍 Mirpur-1, Dhaka-1216</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  © 2026 MD. Moniruzzaman Ishaan · Built with a focus on operational excellence &amp; premium client experience.
+</footer>
+
+<!-- ===== THEME SCRIPT ===== -->
+<script>
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+
+  // Load saved theme
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    root.setAttribute('data-theme', saved);
+    toggle.textContent = saved === 'dark' ? '🌙' : '☀️';
+  }
+
+  toggle.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    toggle.textContent = next === 'dark' ? '🌙' : '☀️';
+  });
+</script>
+
+</body>
+</html>
